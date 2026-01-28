@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+  <div class="brand">
+    <span class="badge"><span class="dot"></span> disponível hoje</span>
+    <span class="badge">TVDE • Transfers • Agendado</span>
+  </div>
+
+  <h1>Motorista TVDE — viagens com conforto e pontualidade</h1>
+  <p class="sub">
+    Atendimento profissional para cidade, aeroporto e viagens agendadas.
+    Você pode pedir uma <strong>estimativa rápida</strong> e me chamar direto no WhatsApp.
+  </p>
+
+  <div class="chips">
+    <span class="chip">Aeroporto / Estação</span>
+    <span class="chip">Transfer</span>
+    <span class="chip">Horário marcado</span>
+    <span class="chip">Viagem intermunicipal</span>
+  </div>
+</section>
+
+<div class="grid">
+  <section class="card">
+    <h2>Contato rápido</h2>
+
+    <div class="cta">
+      <a class="btn primary" href="https://wa.me/+351930466538?text=Olá!%20Vi%20seu%20QR%20e%20queria%20um%20orçamento%20para%20uma%20viagem.">
+        WhatsApp
+      </a>
+      <a class="btn" href="tel:+351930466538">Ligar</a>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="v">⭐ 5.0</div>
+        <div class="l">avaliação</div>
+      </div>
+      <div class="kpi">
+        <div class="v">⏱️ Rápido</div>
+        <div class="l">resposta</div>
+      </div>
+      <div class="kpi">
+        <div class="v">🧼 Limpo</div>
+        <div class="l">conforto</div>
+      </div>
+    </div>
+
+    <p class="small">
+      Dica: mande <strong>origem + destino + horário</strong>. Eu confirmo o valor final antes da viagem.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Estimativa rápida</h2>
+
+    <form method="post" action="/quote">
+      <label>Onde você está</label>
+      <input name="origin" placeholder="Ex.: Praça X, bairro Y" required />
+
+      <label>Para onde vai</label>
+      <input name="destination" placeholder="Ex.: Aeroporto / Hotel / Rua..." required />
+
+      <label>Distância (km) — opcional</label>
+      <input name="distance_km" inputmode="decimal" placeholder="Ex.: 18.4 (se você souber)" />
+
+      <div class="cta" style="margin-top:12px;">
+        <button class="btn primary" type="submit" style="border:none; cursor:pointer;">
+          Calcular estimativa
+        </button>
+      </div>
+
+      <p class="small">
+        Se você informar os km, eu uso esse valor. Senão, uso uma estimativa simples (sem mapa).
+      </p>
+    </form>
+  </section>
+</div>
+
+<p class="footer">
+  Atendimento mediante disponibilidade. Segurança e respeito em primeiro lugar.
+</p>
+
+{% endblock %}

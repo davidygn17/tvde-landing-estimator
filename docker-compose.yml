@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    container_name: tvde_qr_db
+    environment:
+      POSTGRES_DB: tvde_qr
+      POSTGRES_USER: tvde
+      POSTGRES_PASSWORD: tvde_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - tvde_qr_pgdata:/var/lib/postgresql/data
+
+volumes:
+  tvde_qr_pgdata:

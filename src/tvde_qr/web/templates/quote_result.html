@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+  <div class="brand">
+    <span class="badge"><span class="dot"></span> estimativa gerada</span>
+    <span class="badge">TVDE • Transfers • Agendado</span>
+  </div>
+
+  <h1>Estimativa aproximada</h1>
+  <p class="sub">
+    Abaixo está uma estimativa baseada nos dados informados. Eu confirmo o valor final antes da viagem.
+  </p>
+</section>
+
+<div class="grid">
+  <section class="card">
+    <h2>Rota</h2>
+
+    <div class="kpis">
+  <div class="kpi">
+    <div class="v">{% if distance_km is not none %}
+  {{ distance_km }} km
+{% else %}
+  —
+{% endif %}
+</div>
+    <div class="l">distância</div>
+  </div>
+
+  {% if duration_min %}
+  <div class="kpi">
+    <div class="v">{{ duration_min }} min</div>
+    <div class="l">tempo (Google)</div>
+  </div>
+  {% endif %}
+
+  <div class="kpi">
+    <div class="v">
+  {% if price is not none %}
+    {{ currency }} {{ price }}
+  {% else %}
+    Valor a combinar
+  {% endif %}
+</div>
+
+
+
+<p class="small">
+  {% if distance_source.startswith("cache") %}
+    Distância vinda do cache (consulta anterior).
+  {% elif distance_source == "google_directions" %}
+    Distância e tempo calculados pelo Google Maps (rota real).
+  {% elif distance_source == "manual_km" %}
+    Distância informada manualmente.
+  {% else %}
+    Distância estimada (modo simples, sem mapa).
+  {% endif %}
+</p>
+
+  </section>
+
+  <section class="card">
+    <h2>Valor</h2>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="v">{% if distance_km is not none %}
+  {{ distance_km }} km
+{% else %}
+  —
+{% endif %}</div>
+        <div class="l">distância</div>
+      </div>
+      <div class="kpi">
+        <div class="v">{% if price is not none %}
+  {{ currency }} {{ price }}
+{% else %}
+  Valor a combinar
+{% endif %}
+</div>
+        <div class="l">estimativa</div>
+      </div>
+      <div class="kpi">
+        <div class="v">⏱️</div>
+        <div class="l">agendamento</div>  
+      </div>
+    </div>
+
+    <div class="cta">
+      <a class="btn primary" href="{{ whatsapp_url }}">Pedir no WhatsApp</a>
+      <a class="btn" href="/m/demo">Voltar</a>
+    </div>
+
+    <p class="small">
+      Estimativa aproximada. Pode variar conforme rota real, trânsito, pedágios e horário.
+    </p>
+  </section>
+</div>
+
+<p class="footer">
+  Segurança e respeito em primeiro lugar.
+</p>
+
+{% endblock %}
