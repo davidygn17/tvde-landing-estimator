@@ -51,12 +51,15 @@ pricing_service = PricingService(
     )
 )
 
-def get_db() -> Session:
+def get_db():
+    if SessionLocal is None:
+        raise RuntimeError("DATABASE_URL não configurada")
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
+
 
 
 @app.get("/m/demo", response_class=HTMLResponse)

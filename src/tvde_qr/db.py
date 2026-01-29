@@ -10,5 +10,10 @@ class Base(DeclarativeBase):
     pass
 
 
-engine = create_engine(settings.database_url, pool_pre_ping=True)
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+if not settings.database_url or "driver://" in settings.database_url:
+    # Evita crash em dev quando DATABASE_URL não está configurada.
+    engine = None
+    SessionLocal = None
+else:
+    engine = create_engine(settings.database_url, pool_pre_ping=True)
+    SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
