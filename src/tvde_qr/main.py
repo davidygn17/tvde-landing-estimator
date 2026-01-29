@@ -21,6 +21,22 @@ osrm = OSRMClient()
 
 app = FastAPI(title="TVDE QR")
 
+@app.get("/", response_class=HTMLResponse)
+def landing(request: Request) -> HTMLResponse:
+    # Página principal do QR (link do cartão)
+    return templates.TemplateResponse("driver.html", {"request": request})
+
+
+@app.get("/", response_class=HTMLResponse)
+def root() -> HTMLResponse:
+    return HTMLResponse("OK")
+
+
+@app.get("/health")
+def health():
+    return {"ok": True}
+
+
 app.mount("/static", StaticFiles(directory="src/tvde_qr/web/static"), name="static")
 templates = Jinja2Templates(directory="src/tvde_qr/web/templates")
 
