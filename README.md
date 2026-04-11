@@ -1,41 +1,47 @@
-﻿# TVDE QR — Landing + Estimativa de Viagem (FastAPI) + Postgres Cache
+﻿# 🚖 TVDE Landing + Estimativa de Viagem
 
-Site minimalista (mobile-first) para motorista TVDE: o cliente lê um QR Code no cartão, abre uma landing premium e pode pedir uma estimativa rápida de viagem (origem/destino).  
-O sistema calcula distância/tempo por rota real **gratuitamente** usando **OpenStreetMap (Nominatim) + OSRM**, e faz **cache no PostgreSQL** para evitar chamadas repetidas.
+Site mobile-first para motoristas TVDE: o cliente lê um QR Code, abre uma 
+landing premium e pode pedir uma estimativa de viagem em tempo real.
 
 ## ✨ Features
 
-- Landing page premium para abrir via QR (mobile-first)
-- Formulário: origem/destino → distância + tempo (rota real)
-- Cache de rota no PostgreSQL (TTL)
+- Landing page premium via QR Code (mobile-first)
+- Estimativa de distância e tempo por rota real
+- Geocoding gratuito com OpenStreetMap (Nominatim)
+- Cálculo de rota com OSRM (sem custos de API)
+- Cache de rotas no PostgreSQL com TTL
 - Migrations com Alembic
-- Testes com pytest + coverage (inclui mocks do OSRM)
-- Projeto organizado com Poetry e `src/` layout
+- Testes com pytest + coverage (mocks do OSRM)
 
 ## 🧱 Stack
 
-- Python + FastAPI
-- Jinja2 (templates)
-- httpx (requests)
-- PostgreSQL (Docker)
-- SQLAlchemy + Alembic
-- pytest + pytest-cov + respx + pytest-asyncio
-
----
-
-## ✅ Requisitos
-
-- Python 3.11+ (recomendado)
-- Poetry
-- Docker Desktop (para PostgreSQL)
-
----
+- **Python 3.11+** + **FastAPI**
+- **Jinja2** (templates HTML)
+- **httpx** (requisições async)
+- **PostgreSQL** via Docker
+- **SQLAlchemy** + **Alembic**
+- **pytest** + pytest-cov + respx + pytest-asyncio
+- **Poetry** para gestão de dependências
 
 ## 🚀 Como rodar localmente
 
-### 1) Clonar e instalar dependências
+```bash
+git clone https://github.com/davidygn17/tvde-landing-estimator.git
+cd tvde-landing-estimator
+poetry install
+docker-compose up -d
+poetry run alembic upgrade head
+poetry run uvicorn src.main:app --reload
+```
+
+## 🧪 Testes
 
 ```bash
-git clone <SEU_REPO_AQUI>
-cd tvde-qr
-poetry install
+poetry run pytest --cov=src
+```
+
+## 📌 Requisitos
+
+- Python 3.11+
+- Poetry
+- Docker Desktop
