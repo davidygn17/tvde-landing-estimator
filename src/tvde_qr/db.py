@@ -11,9 +11,11 @@ class Base(DeclarativeBase):
 
 
 if not settings.database_url or "driver://" in settings.database_url:
-    # Evita crash em dev quando DATABASE_URL não está configurada.
     engine = None
     SessionLocal = None
 else:
-    engine = create_engine(settings.database_url, pool_pre_ping=True)
+    db_url = settings.database_url
+    if db_url.startswith("postgresql://"):
+        db_url = db_url.replace("postgresql://", "postgresql+psycopg://", 1)
+    engine = create_engine(db_url, pool_pre_ping=True)
     SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
