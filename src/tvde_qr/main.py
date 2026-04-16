@@ -37,8 +37,10 @@ def health():
     return {"ok": True}
 
 
-app.mount("/static", StaticFiles(directory="src/tvde_qr/web/static"), name="static")
-templates = Jinja2Templates(directory="src/tvde_qr/web/templates")
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "web/static")), name="static")
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "web/templates"))
 
 distance_service = DistanceService()
 
