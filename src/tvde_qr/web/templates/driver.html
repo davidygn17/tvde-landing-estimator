@@ -1,85 +1,289 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section class="hero">
-  <div class="brand">
-    <span class="badge"><span class="dot"></span> disponível hoje</span>
-    <span class="badge">TVDE • Transfers • Agendado</span>
+<div class="dg-top">
+  <div class="dg-wordmark">
+    David Garcia
+    <span>Ride &amp; Transfer</span>
   </div>
+  <div class="lang-pills">
+    <button class="lang-pill active" onclick="setLang('en')">EN</button>
+    <button class="lang-pill" onclick="setLang('pt')">PT</button>
+    <button class="lang-pill" onclick="setLang('es')">ES</button>
+  </div>
+</div>
 
-  <h1>Motorista TVDE — viagens com conforto e pontualidade</h1>
-  <p class="sub">
-    Atendimento profissional para cidade, aeroporto e viagens agendadas.
-    Você pode pedir uma <strong>estimativa rápida</strong> e me chamar direto no WhatsApp.
-  </p>
+<div class="dg-profile">
+  <img class="dg-avatar" src="/static/david.jpg" alt="David Garcia" />
+  <div class="dg-profile-info">
+    <div class="dg-profile-name">David Garcia</div>
+    <div class="dg-profile-sub" data-t="profile_sub">Professional driver · Lisbon</div>
+    <div class="dg-profile-badges">
+      <span class="dg-pbadge green" data-t="badge_reply">Reply in &lt;5 min</span>
+      <span class="dg-pbadge blue">5.0 ★ Google</span>
+    </div>
+  </div>
+</div>
 
-  <div class="chips">
-    <span class="chip">Aeroporto / Estação</span>
-    <span class="chip">Transfer</span>
-    <span class="chip">Horário marcado</span>
-    <span class="chip">Viagem intermunicipal</span>
+<div class="dg-pwa-banner" id="pwa-banner">
+  <div class="dg-pwa-icon">📱</div>
+  <div class="dg-pwa-text">
+    <div class="dg-pwa-title" data-t="pwa_title">Add to your home screen</div>
+    <div class="dg-pwa-sub" data-t="pwa_sub">Access David's contact instantly, like an app.</div>
+  </div>
+  <button class="dg-pwa-btn" onclick="installPWA()" data-t="pwa_btn">Install</button>
+</div>
+
+<section class="dg-hero">
+  <div class="dg-status">
+    <div class="dg-dot"></div>
+    <span data-t="available">Available today</span>
+  </div>
+  <h1 class="dg-h1" data-t="headline">Professional rides,
+on your schedule.</h1>
+  <p class="dg-sub" data-t="sub">City, airport, and scheduled transfers. Request a quick estimate and reach me directly on WhatsApp.</p>
+  <div class="dg-tags">
+    <span class="dg-tag" data-t="tag1">Airport / Station</span>
+    <span class="dg-tag" data-t="tag2">Private Transfer</span>
+    <span class="dg-tag" data-t="tag3">Scheduled</span>
+    <span class="dg-tag" data-t="tag4">Intercity</span>
   </div>
 </section>
 
-<div class="grid">
-  <section class="card">
-    <h2>Contato rápido</h2>
+<hr class="dg-divider">
 
-    <div class="cta">
-      <a class="btn primary" href="https://wa.me/+351930466538?text=Olá!%20Vi%20seu%20QR%20e%20queria%20um%20orçamento%20para%20uma%20viagem.">
-        WhatsApp
-      </a>
-      <a class="btn" href="tel:+351930466538">Ligar</a>
+<div class="dg-grid">
+
+  <div class="dg-panel">
+    <div class="dg-panel-label" data-t="contact_label">Contact</div>
+    <div class="dg-ctarow">
+      <a class="dg-btn primary" id="wa-link"
+         href="https://wa.me/+351930466538?text=Hello!%20I%20saw%20your%20QR%20and%20would%20like%20a%20quote."
+         data-t="whatsapp">WhatsApp</a>
+      <a class="dg-btn" href="tel:+351930466538" data-t="call">Call</a>
     </div>
-
-    <div class="kpis">
-      <div class="kpi">
-        <div class="v">⭐ 5.0</div>
-        <div class="l">avaliação</div>
+    <div class="dg-stats">
+      <div class="dg-stat">
+        <div class="dg-stat-v">5.0 ★</div>
+        <div class="dg-stat-l" data-t="rating">rating</div>
       </div>
-      <div class="kpi">
-        <div class="v">⏱️ Rápido</div>
-        <div class="l">resposta</div>
+      <div class="dg-stat">
+        <div class="dg-stat-v" data-t="fast">Fast</div>
+        <div class="dg-stat-l" data-t="reply">reply</div>
       </div>
-      <div class="kpi">
-        <div class="v">🧼 Limpo</div>
-        <div class="l">conforto</div>
+      <div class="dg-stat">
+        <div class="dg-stat-v" data-t="clean">Clean</div>
+        <div class="dg-stat-l" data-t="comfort">comfort</div>
       </div>
     </div>
-
-    <p class="small">
-      Dica: mande <strong>origem + destino + horário</strong>. Eu confirmo o valor final antes da viagem.
+    <p class="dg-note" data-t="contact_note">
+      Tip: send origin + destination + time. I confirm the final price before the trip.
     </p>
-  </section>
+  </div>
 
-  <section class="card">
-    <h2>Estimativa rápida</h2>
+  <div class="dg-separator"></div>
 
+  <div class="dg-panel">
+    <div class="dg-panel-label" data-t="estimate_label">Quick estimate</div>
     <form method="post" action="/quote">
-      <label>Onde você está</label>
-      <input name="origin" placeholder="Ex.: Praça X, bairro Y" required />
-
-      <label>Para onde vai</label>
-      <input name="destination" placeholder="Ex.: Aeroporto / Hotel / Rua..." required />
-
-      <label>Distância (km) — opcional</label>
-      <input name="distance_km" inputmode="decimal" placeholder="Ex.: 18.4 (se você souber)" />
-
-      <div class="cta" style="margin-top:12px;">
-        <button class="btn primary" type="submit" style="border:none; cursor:pointer;">
-          Calcular estimativa
-        </button>
+      <div class="dg-field">
+        <label class="dg-field-label" data-t="from">From</label>
+        <input class="dg-input" name="origin" id="est-origin" required
+               data-ph="from" placeholder="E.g.: Praça X, Lisbon" />
       </div>
-
-      <p class="small">
-        Se você informar os km, eu uso esse valor. Senão, uso uma estimativa simples (sem mapa).
+      <div class="dg-field">
+        <label class="dg-field-label" data-t="to">To</label>
+        <input class="dg-input" name="destination" id="est-dest" required
+               data-ph="to" placeholder="E.g.: Airport / Hotel..." />
+      </div>
+      <div class="dg-field">
+        <label class="dg-field-label" data-t="km_label">Distance km (optional)</label>
+        <input class="dg-input" name="distance_km" id="est-km"
+               inputmode="decimal" data-ph="km_ph" placeholder="E.g.: 18.4" />
+      </div>
+      <div class="dg-field">
+        <label class="dg-field-label" data-t="datetime_label">Date &amp; time (optional)</label>
+        <input class="dg-input" name="scheduled_at" id="est-datetime"
+               type="datetime-local" style="color-scheme:dark;" />
+      </div>
+      <button class="dg-btn primary" type="submit" id="calc-btn"
+              style="width:100%;margin-top:10px;border:none;cursor:pointer;"
+              data-t="calculate">Calculate estimate</button>
+      <p class="dg-note" data-t="form_note">
+        Just enter origin and destination — distance is calculated automatically.
       </p>
     </form>
-  </section>
+  </div>
+
 </div>
 
-<p class="footer">
-  Atendimento mediante disponibilidade. Segurança e respeito em primeiro lugar.
-</p>
+<!-- Resultado AJAX aparece aqui -->
+<div id="quote-result-box" class="dg-result-box" style="display:none;"></div>
+
+<div class="dg-reviews">
+  <div class="dg-reviews-label" data-t="reviews_label">What clients say</div>
+  <div class="dg-review-grid">
+    <div class="dg-review">
+      <div class="dg-review-stars">★★★★★</div>
+      <div class="dg-review-text" data-t="r1_text">"Very punctual and professional. Highly recommended!"</div>
+      <div class="dg-review-author">Maria S. · Lisbon</div>
+    </div>
+    <div class="dg-review">
+      <div class="dg-review-stars">★★★★★</div>
+      <div class="dg-review-text" data-t="r2_text">"Perfect airport transfer. Clean car, friendly driver."</div>
+      <div class="dg-review-author">João P. · Porto</div>
+    </div>
+  </div>
+</div>
+
+<p class="dg-footer" data-t="footer">Safety and respect first.</p>
+
+<a class="wa-float" href="https://wa.me/+351930466538" id="wa-float-btn" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white" width="26" height="26">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+var deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('pwa-banner').classList.add('visible');
+});
+
+function installPWA() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(function() {
+    deferredPrompt = null;
+    document.getElementById('pwa-banner').classList.remove('visible');
+  });
+}
+
+function submitQuote(e) {
+  e.preventDefault();
+  var form = document.getElementById('quote-form');
+  var btn = document.getElementById('calc-btn');
+  var resultBox = document.getElementById('quote-result-box');
+
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  var data = new FormData(form);
+
+  fetch('/quote', {
+    method: 'POST',
+    body: data
+  })
+  .then(function(res) { return res.text(); })
+  .then(function(html) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(html, 'text/html');
+    var content = doc.querySelector('main') || doc.querySelector('.container') || doc.body;
+    resultBox.innerHTML = content.innerHTML;
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  })
+  .catch(function() {
+    resultBox.innerHTML = '<p class="dg-note" style="color:#f87171;">Could not calculate. Please try again.</p>';
+    resultBox.style.display = 'block';
+  })
+  .finally(function() {
+    var t = T[currentLang] || T['en'];
+    btn.disabled = false;
+    btn.textContent = t.calculate;
+  });
+}
+
+var currentLang = 'en';
+
+var T = {
+  en: {
+    available:"Available today", headline:"Professional rides,\non your schedule.",
+    sub:"City, airport, and scheduled transfers. Request a quick estimate and reach me directly on WhatsApp.",
+    tag1:"Airport / Station", tag2:"Private Transfer", tag3:"Scheduled", tag4:"Intercity",
+    profile_sub:"Professional driver · Lisbon", badge_reply:"Reply in <5 min",
+    contact_label:"Contact", whatsapp:"WhatsApp", call:"Call",
+    rating:"rating", fast:"Fast", reply:"reply", clean:"Clean", comfort:"comfort",
+    contact_note:"Tip: send origin + destination + time. I confirm the final price before the trip.",
+    estimate_label:"Quick estimate", from:"From", to:"To", km_label:"Distance km (optional)",
+    from_ph:"E.g.: Praça X, Lisbon", to_ph:"E.g.: Airport / Hotel...", km_ph:"E.g.: 18.4",
+    datetime_label:"Date & time (optional)",
+    calculate:"Calculate estimate",
+    form_note:"Just enter origin and destination — distance is calculated automatically.",
+    reviews_label:"What clients say",
+    r1_text:'"Very punctual and professional. Highly recommended!"',
+    r2_text:'"Perfect airport transfer. Clean car, friendly driver."',
+    pwa_title:"Add to your home screen", pwa_sub:"Access David's contact instantly, like an app.", pwa_btn:"Install",
+    footer:"Safety and respect first.",
+    wa_msg:"Hello!%20I%20saw%20your%20QR%20and%20would%20like%20a%20quote."
+  },
+  pt: {
+    available:"Disponível hoje", headline:"Viagens com conforto\ne pontualidade.",
+    sub:"Cidade, aeroporto e transfers agendados. Peça uma estimativa rápida e fale comigo direto no WhatsApp.",
+    tag1:"Aeroporto / Estação", tag2:"Transfer Privado", tag3:"Agendado", tag4:"Intermunicipal",
+    profile_sub:"Motorista profissional · Lisboa", badge_reply:"Resposta em <5 min",
+    contact_label:"Contato", whatsapp:"WhatsApp", call:"Ligar",
+    rating:"avaliação", fast:"Rápido", reply:"resposta", clean:"Limpo", comfort:"conforto",
+    contact_note:"Dica: mande origem + destino + horário. Confirmo o valor final antes da viagem.",
+    estimate_label:"Estimativa rápida", from:"Origem", to:"Destino", km_label:"Distância km (opcional)",
+    from_ph:"Ex.: Praça X, bairro Y", to_ph:"Ex.: Aeroporto / Hotel / Rua...", km_ph:"Ex.: 18.4",
+    datetime_label:"Data e hora (opcional)",
+    calculate:"Calcular estimativa",
+    form_note:"Só precisa de origem e destino — distância calculada automaticamente.",
+    reviews_label:"O que dizem os clientes",
+    r1_text:'"Muito pontual e profissional. Recomendo muito!"',
+    r2_text:'"Transfer perfeito. Carro limpo, motorista simpático."',
+    pwa_title:"Adicionar ao ecrã inicial", pwa_sub:"Aceda ao contato do David como uma app.", pwa_btn:"Instalar",
+    footer:"Segurança e respeito em primeiro lugar.",
+    wa_msg:"Olá!%20Vi%20seu%20QR%20e%20queria%20um%20orçamento."
+  },
+  es: {
+    available:"Disponible hoy", headline:"Viajes cómodos\na tu ritmo.",
+    sub:"Ciudad, aeropuerto y traslados programados. Solicita una estimación y contáctame por WhatsApp.",
+    tag1:"Aeropuerto / Estación", tag2:"Traslado Privado", tag3:"Programado", tag4:"Interurbano",
+    profile_sub:"Conductor profesional · Lisboa", badge_reply:"Respuesta en <5 min",
+    contact_label:"Contacto", whatsapp:"WhatsApp", call:"Llamar",
+    rating:"valoración", fast:"Rápido", reply:"respuesta", clean:"Limpio", comfort:"confort",
+    contact_note:"Consejo: envía origen + destino + hora. Confirmo el precio final antes del viaje.",
+    estimate_label:"Estimación rápida", from:"Origen", to:"Destino", km_label:"Distancia km (opcional)",
+    from_ph:"Ej.: Plaza X, barrio Y", to_ph:"Ej.: Aeropuerto / Hotel...", km_ph:"Ej.: 18.4",
+    datetime_label:"Fecha y hora (opcional)",
+    calculate:"Calcular estimación",
+    form_note:"Solo introduce origen y destino — la distancia se calcula automáticamente.",
+    reviews_label:"Lo que dicen los clientes",
+    r1_text:'"Muy puntual y profesional. ¡Muy recomendado!"',
+    r2_text:'"Traslado perfecto. Coche limpio, conductor amable."',
+    pwa_title:"Añadir a la pantalla de inicio", pwa_sub:"Accede al contacto de David como una app.", pwa_btn:"Instalar",
+    footer:"Seguridad y respeto ante todo.",
+    wa_msg:"Hola!%20Vi%20tu%20QR%20y%20quer%C3%ADa%20un%20presupuesto."
+  }
+};
+
+function setLang(l) {
+  currentLang = l;
+  document.querySelectorAll('.lang-pill').forEach(function(b) {
+    b.classList.toggle('active', b.textContent === l.toUpperCase());
+  });
+  var t = T[l];
+  document.querySelectorAll('[data-t]').forEach(function(el) {
+    var k = el.dataset.t;
+    if (!t[k] || el.classList.contains('lang-pill')) return;
+    el.textContent = t[k];
+  });
+  document.querySelectorAll('[data-ph]').forEach(function(el) {
+    var ph = t[el.dataset.ph + '_ph'];
+    if (ph) el.placeholder = ph;
+  });
+  document.getElementById('wa-link').href = 'https://wa.me/+351930466538?text=' + t.wa_msg;
+  document.getElementById('wa-float-btn').href = 'https://wa.me/+351930466538?text=' + t.wa_msg;
+  try { localStorage.setItem('dg-lang', l); } catch(e) {}
+}
+
+try { setLang(localStorage.getItem('dg-lang') || 'en'); }
+catch(e) { setLang('en'); }
+</script>
 
 {% endblock %}

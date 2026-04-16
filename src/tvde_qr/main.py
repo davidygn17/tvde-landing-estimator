@@ -198,3 +198,12 @@ async def quote_page(
             "whatsapp_url": whatsapp_url,
         },
     )
+@app.post("/quote/fragment", response_class=HTMLResponse)
+async def quote_fragment(
+    request: Request,
+    origin: str = Form(...),
+    destination: str = Form(...),
+    distance_km: str = Form(""),
+    db: Session = Depends(get_db),
+) -> HTMLResponse:
+    return await quote_page(request, origin, destination, distance_km, db)
