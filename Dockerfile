@@ -12,4 +12,4 @@ COPY . .
 
 WORKDIR /app/src
 
-CMD python -m alembic upgrade head && uvicorn tvde_qr.main:app --host 0.0.0.0 --port $PORT
+CMD python -m alembic -c /app/alembic.ini upgrade head && uvicorn tvde_qr.main:app --host 0.0.0.0 --port $PORT
