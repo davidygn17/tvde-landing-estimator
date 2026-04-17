@@ -40,13 +40,11 @@ class OSRMClient:
             raise OSRMError(str(e)) from e
 
     async def _geocode_one(self, query: str) -> tuple[float, float]:
-        search_query = f"{query}, Portugal"
-
         params = {
-            "q": search_query,
+            "q": query,
             "format": "json",
             "limit": 1,
-            "countrycodes": "pt",
+            "countrycodes": "pt,es",
             "addressdetails": 1
         }
         headers = {"User-Agent": self.user_agent}
