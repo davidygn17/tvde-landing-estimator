@@ -40,7 +40,15 @@ class OSRMClient:
             raise OSRMError(str(e)) from e
 
     async def _geocode_one(self, query: str) -> tuple[float, float]:
-        params = {"q": query, "format": "json", "limit": 1}
+        search_query = f"{query}, Portugal"
+
+        params = {
+            "q": search_query,
+            "format": "json",
+            "limit": 1,
+            "countrycodes": "pt",
+            "addressdetails": 1
+        }
         headers = {"User-Agent": self.user_agent}
 
         data = await self._get_json(self.NOMINATIM, params=params, headers=headers)
@@ -65,7 +73,6 @@ class OSRMClient:
         o_lat, o_lon = await self._geocode_one(origin)
         d_lat, d_lon = await self._geocode_one(destination)
 
-        # OSRM espera "lon,lat;lon,lat"
         url = f"{self.BASE_OSRM}/route/v1/driving/{o_lon},{o_lat};{d_lon},{d_lat}"
         params = {"overview": "false"}
         headers = {"User-Agent": self.user_agent}
